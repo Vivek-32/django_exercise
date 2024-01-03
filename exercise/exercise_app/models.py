@@ -1,20 +1,16 @@
 # location_app/models.py
 from django.db import models
-# from django.contrib.auth.models import AbstractUser, AbstractBaseUser
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser
 from django.utils.translation import gettext_lazy as _
 import uuid
-# from .managers import CustomUserManager
 
-# class CustomUser(AbstractBaseUser):
-#     email = models.EmailField(_("email address"), unique=True)
-#     USERNAME_FIELD = 'email'
-#     REQUIRED_FIELDS = ('username', )
-    
-#     objects = CustomUserManager()
-    
-#     def __str__(self):
-#         return self.email
-    # my_user = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
+class CustomUser(AbstractUser):
+    email = models.EmailField(_("email address"), unique=True)
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('username', )
+        
+    def __str__(self):
+        return self.email
     
 class Country(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -22,7 +18,7 @@ class Country(models.Model):
     country_code = models.CharField(max_length=10)
     curr_symbol = models.CharField(max_length=10)
     phone_code = models.CharField(max_length=10)
-    # my_user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
+    my_user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, blank=True)
 
 
 class State(models.Model):
